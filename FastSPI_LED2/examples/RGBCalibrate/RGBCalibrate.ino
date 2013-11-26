@@ -23,7 +23,7 @@
 //
 //////////////////////////////////////////////////
 
-#define NUM_LEDS 6
+#define NUM_LEDS 120
 
 // Data pin that led data will be written out over
 #define DATA_PIN 7
@@ -40,7 +40,7 @@ void setup() {
       // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
-      // FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
+       FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
