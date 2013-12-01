@@ -4,9 +4,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //
-// Move a white dot along the strip of leds.  This program simply shows how to configure the leds,
-// and then how to turn a single pixel white and then off, moving down the line of pixels.
-// 
+//  Drives RGB lED strands based on packets received via XBee wireless
+//  Protocol is #IHSL where 
+//      # is a delimeter
+//      I is a byte indicating the LED index
+//      H, S, and L are each bytes indicating hue, saturation, and luminosity respectively
 
 // How many leds are in the strip?
 #define NUM_LEDS 120
@@ -14,34 +16,30 @@
 // Data pin that led data will be written out over
 #define DATA_PIN 7
 
-// Clock pin only needed for SPI based chipsets when not using hardware SPI
-//#define CLOCK_PIN 8
-
-// This is an array of leds.  One item for each led in your strip.
+// This is an array of leds.  One item for each led in the strip.
 CRGB leds[NUM_LEDS];
-int hue;
-// this is where we will put our data
-int myData = 0;
 
-// This function sets up the ledsand tells the controller about them
+// Data read from XBee
+int serialData = 0;
+
 void setup() {
       	// sanity check delay - allows reprogramming if accidently blowing power w/leds
        	delay(2000);
+       
+       // Set up the leds and tell the controller about them
        FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
        
-       // Start up our serial port, we configured our XBEE devices for 38400 bps. 
+       // Start up serial comm with XBee
       Serial.begin(9600);
 }
-// This function runs over and over, and is where you do the magic to light
-// your leds.
+
+//Primary driver loop
 void loop() {
   
   if(Serial.available() > 0){
-        myData = Serial.read();
-        if(myData == '\n')
-            Serial.write(myData);
-        else
-            Serial.write(myData + 1);
+      //Read first byte  
+      myData = Serial.read();
+      //
             
       // Update LEDs
      // leds[ledIndex].setHSV(hue,255,128); //= CRGB::White;
