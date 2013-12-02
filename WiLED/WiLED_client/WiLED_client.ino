@@ -42,29 +42,22 @@ void setup() {
 
 //Primary driver loop
 void loop() {
-  
   if(Serial.available() >= 13){
- 
       //Read packet from server 
       Serial.readBytesUntil('#',rawData,14);
-      data = String(rawData);
-      //Serial.println(data);
+      data = String(rawData);    
       
       //Validate packet
       if(data.length() == 13 && data.indexOf('#') == 12) {
+        
         //Parse packet
         ledIndex = data.substring(0,3).toInt();
         ledRed = data.substring(3,6).toInt();
         ledGreen = data.substring(6,9).toInt();
         ledBlue = data.substring(9,12).toInt();
-
-        /*Serial.println(ledIndex);
-        Serial.println(ledRed);
-        Serial.println(ledGreen);
-        Serial.println(ledBlue);*/
         
         //Update LEDs
-        leds[ledIndex].setRGB(ledRed, ledGreen, ledBlue);
+        leds[ledIndex].setRGB(ledRed, ledGreen, ledBlue);        
         FastLED.show(); 
       }
    }

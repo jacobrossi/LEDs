@@ -3,17 +3,15 @@ import time
 import serial
 
 SERIAL_PORT = 'com4'
+BAUD = 9600 
 NUM_LEDS = 120
 
-def setLED(index,r,g,b):
-    print("%03d%03d%03d%03d#" % (index,r,g,b))
+def setRGB(index,r,g,b):
     comm.write(bytes("%03d%03d%03d%03d#" % (index,r,g,b),"ascii"))
-    
 
-comm = serial.Serial(SERIAL_PORT)
+comm = serial.Serial(SERIAL_PORT,BAUD)
 for i in range(0, NUM_LEDS):
-    setLED(i,0,255,0)
-    time.sleep(0.05)
-
+    setRGB(i,128,128,128)
+    time.sleep(0.050) #some time for Arduino to process, avoiding overflowing serial buffer
 
 comm.close()
